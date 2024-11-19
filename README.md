@@ -21,10 +21,11 @@ Intégration avec les API REST via HttpClient.
 
 Test et documentation des endpoints avec Postman.
 ## Architecture :
+model -> jpa Repository -> Service -> exception -> controller -> test using postman
 
 Architecture client-serveur basée sur REST.
 Séparation claire entre le frontend et le backend.
-model -> jpa Repository -> Service -> exception -> controller -> test using postman
+
 Prérequis :
 Backend :
 
