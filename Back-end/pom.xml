@@ -55,11 +55,6 @@
 			<version>1.18.28</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>11.2.2.jre8</version> <!-- Utilisez la dernière version -->
-		</dependency>
 	</dependencies>
 
 	<build>
