@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.ayoub.employeemanager.DTO.EmployeeRequest;
+import tech.ayoub.employeemanager.DTO.EmployeeResponse;
 import tech.ayoub.employeemanager.model.Employee;
 import tech.ayoub.employeemanager.service.EmployeeService;
 
@@ -19,27 +21,27 @@ public class EmployeeResource {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Employee>> getAllEmployees(){
-        List<Employee> employees = employeeService.findAllEmployees();
+    public ResponseEntity<List<EmployeeResponse>> getAllEmployees(){
+        List<EmployeeResponse> employees = employeeService.findAllEmployees();
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Long id){
-        Employee employee = employeeService.findEmployeeById(id);
+    public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable("id") Long id){
+        EmployeeResponse employee = employeeService.findEmployeeById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee){
-        Employee newEmployee = employeeService.addEmployee(employee);
+    public ResponseEntity<EmployeeResponse> addEmployee(@RequestBody EmployeeRequest employeeRequest){
+        EmployeeResponse newEmployee = employeeService.addEmployee(employeeRequest);
         return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
-        Employee updateEmployee = employeeService.updateEmployee(employee);
-        return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeRequest employeeRequest){
+        EmployeeResponse employeeResponse = employeeService.updateEmployee(id, employeeRequest);
+        return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/Delete/{id}")
