@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ayoub.employeemanager.DTO.EmployeeRequest;
 import tech.ayoub.employeemanager.DTO.EmployeeResponse;
+import tech.ayoub.employeemanager.service.EmployeeService;
 import tech.ayoub.employeemanager.service.serviceImp.EmployeeServiceImp;
 
 import java.util.List;
@@ -12,40 +13,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeResource {
-    private final EmployeeServiceImp employeeServiceImp;
+    private final EmployeeService employeeService;
 
-    public EmployeeResource(EmployeeServiceImp employeeServiceImp) {
-        this.employeeServiceImp = employeeServiceImp;
+    public EmployeeResource(EmployeeService employeeService){
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<EmployeeResponse>> getAllEmployees(){
-        List<EmployeeResponse> employees = employeeServiceImp.findAllEmployees();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+        List<EmployeeResponse> employees = employeeService.findAllEmployees();
+        return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable("id") Long id){
-        EmployeeResponse employee = employeeServiceImp.findEmployeeById(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+        EmployeeResponse employee = employeeService.findEmployeeById(id);
+        return ResponseEntity.ok(employee);
     }
 
     @PostMapping("/add")
     public ResponseEntity<EmployeeResponse> addEmployee(@RequestBody EmployeeRequest employeeRequest){
-        EmployeeResponse newEmployee = employeeServiceImp.addEmployee(employeeRequest);
-        return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
+        EmployeeResponse newEmployee = employeeService.addEmployee(employeeRequest);
+        return ResponseEntity.ok(newEmployee);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable("id") Long id, @RequestBody EmployeeRequest employeeRequest){
-        EmployeeResponse employeeResponse = employeeServiceImp.updateEmployee(id, employeeRequest);
-        return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
+        EmployeeResponse employeeResponse = employeeService.updateEmployee(id, employeeRequest);
+        return ResponseEntity.ok(employeeResponse);
     }
 
     @DeleteMapping("/Delete/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id){
-        employeeServiceImp.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        employeeService.deleteEmployee(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

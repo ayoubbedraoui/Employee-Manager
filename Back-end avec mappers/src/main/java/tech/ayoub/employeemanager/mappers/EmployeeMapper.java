@@ -12,5 +12,18 @@ public interface EmployeeMapper {
 
     EmployeeResponse toResponse(Employee employee);
 
-    void updateEntity(EmployeeRequest employeeRequest, @MappingTarget Employee employee);
+    default void updateEntity(EmployeeRequest employeeRequest, @MappingTarget Employee employee) {
+        if (employeeRequest.getName() != null) {
+            employee.setName(employeeRequest.getName());
+        }
+        if (employeeRequest.getEmail() != null) {
+            employee.setEmail(employeeRequest.getEmail());
+        }
+        if (employeeRequest.getJobTitle() != null) {
+            employee.setJobTitle(employeeRequest.getJobTitle());
+        }
+        if (employeeRequest.getPhone() != null) {
+            employee.setPhone(employeeRequest.getPhone());
+        }
+    }
 }
